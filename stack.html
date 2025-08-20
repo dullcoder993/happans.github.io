@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Structures Masterclass</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .info-bar {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        
+        .info-item {
+            color: white;
+            text-align: center;
+            margin: 10px;
+        }
+        
+        .info-item i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card-header {
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .linked-list .card-header {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+        }
+        
+        .stack .card-header {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+        }
+        
+        .queue .card-header {
+            background: linear-gradient(to right, #2ecc71, #27ae60);
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .definition {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+            position: relative;
+        }
+        
+        .definition h3::before {
+            content: "📚";
+            margin-right: 10px;
+        }
+        
+        .algorithm {
+            background: #e8f4fc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2ecc71;
+            position: relative;
+        }
+        
+        .algorithm h3::before {
+            content: "🧠";
+            margin-right: 10px;
+        }
+        
+        .code {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+        
+        .code h3::before {
+            content: "💻";
+            margin-right: 10px;
+        }
+        
+        .example {
+            background: #fff4e6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #e67e22;
+            position: relative;
+        }
+        
+        .example h3::before {
+            content: "🌍";
+            margin-right: 10px;
+        }
+        
+        .output {
+            background: #34495e;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+        
+        .output h3::before {
+            content: "📊";
+            margin-right: 10px;
+        }
+        
+        .complexity {
+            background: #f9f0ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #9b59b6;
+            position: relative;
+        }
+        
+        .complexity h3::before {
+            content: "⏱";
+            margin-right: 10px;
+        }
+        
+        .operations {
+            background: #fff0f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #e74c3c;
+            position: relative;
+        }
+        
+        .operations h3::before {
+            content: "🔧";
+            margin-right: 10px;
+        }
+        
+        .visualization {
+            margin-top: 20px;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .node {
+            width: 60px;
+            height: 60px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10px;
+            position: relative;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .node-ptr {
+            width: 60px;
+            height: 60px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .arrow {
+            font-size: 24px;
+            color: #7f8c8d;
+        }
+        
+        .stack-vis {
+            width: 80%;
+            height: 120px;
+            border: 2px solid #7f8c8d;
+            border-top: none;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+        }
+        
+        .stack-element {
+            width: 80%;
+            height: 30px;
+            background: #e74c3c;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .queue-vis {
+            width: 90%;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .queue-element {
+            width: 50px;
+            height: 50px;
+            background: #2ecc71;
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 5px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            background: #3498db;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .linked-list-btn {
+            background: #3498db;
+        }
+        
+        .stack-btn {
+            background: #e74c3c;
+        }
+        
+        .queue-btn {
+            background: #2ecc71;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0;
+            margin-top: 40px;
+            font-size: 0.9rem;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .operation-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+        
+        .operation-item i {
+            margin-right: 10px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .cards-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .card {
+                width: 90%;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Data Structures Masterclass</h1>
+            <p class="subtitle">Master Linked Lists, Stacks, and Queues with Interactive Visualizations</p>
+            
+            <div class="info-bar">
+                <div class="info-item">
+                    <i class="fas fa-code"></i>
+                    <p>Practical Code Examples</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-brain"></i>
+                    <p>Step-by-Step Algorithms</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-project-diagram"></i>
+                    <p>Interactive Visualizations</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <p>Real-World Applications</p>
+                </div>
+            </div>
+        </header>
+        
+        <div class="cards-container">
+            <!-- Linked List Card -->
+            <div class="card linked-list">
+                <div class="card-header">
+                    <i class="fas fa-link"></i>
+                    <h2>Linked List</h2>
+                </div>
+                <div class="card-content">
+                    <div class="definition">
+                        <h3>Definition</h3>
+                        <p>A <span class="highlight">Linked List</span> is a linear data structure where elements (nodes) are connected using pointers. Each node contains <span class="highlight">data</span> and a <span class="highlight">reference (link)</span> to the next node.</p>
+                    </div>
+                    
+                    <div class="algorithm">
+                        <h3>Algorithms</h3>
+                        <p><strong>Insert at Beginning:</strong></p>
+                        <ol>
+                            <li>Create a new node with the given value</li>
+                            <li>Set the new node's next pointer to the current head</li>
+                            <li>Update the head to point to the new node</li>
+                        </ol>
+                        <p><strong>Search Operation:</strong></p>
+                        <ol>
+                            <li>Start from the head node</li>
+                            <li>Traverse through each node until you find the target value</li>
+                            <li>If found, return the node; else return null</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="complexity">
+                        <h3>Time Complexity</h3>
+                        <div class="operation-item">
+                            <i class="fas fa-search"></i>
+                            <span>Access: <strong>O(n)</strong></span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-search-plus"></i>
+                            <span>Search: <strong>O(n)</strong></span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Insertion: <strong>O(1)</strong> at head, <strong>O(n)</strong> at tail</span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-minus-circle"></i>
+                            <span>Deletion: <strong>O(1)</strong> at head, <strong>O(n)</strong> at tail</span>
+                        </div>
+                    </div>
+                    
+                    <div class="operations">
+                        <h3>Common Operations</h3>
+                        <div class="operation-item">
+                            <i class="fas fa-plus"></i>
+                            <span>Insertion (at beginning, end, or specific position)</span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-trash"></i>
+                            <span>Deletion (by value or position)</span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-search"></i>
+                            <span>Searching for an element</span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-sync"></i>
+                            <span>Reversing the list</span>
+                        </div>
+                    </div>
+                    
+                    <div class="code">
+                        <h3>Code (C Example)</h3>
+                        <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void insertFront(struct Node** head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = *head;
+    *head = newNode;
+}
+
+void printList(struct Node* head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+    insertFront(&head, 10);
+    insertFront(&head, 20);
+    insertFront(&head, 30);
+    printList(head);
+    return 0;
+}</pre>
+                    </div>
+                    
+                    <div class="output">
+                        <h3>Output</h3>
+                        <pre>30 -> 20 -> 10 -> NULL</pre>
+                    </div>
+                    
+                    <div class="example">
+                        <h3>Real Life Examples</h3>
+                        <p>🎵 <strong>Music Playlist</strong> - Songs are linked like nodes in a playlist</p>
+                        <p>📚 <strong>Browser History</strong> - Pages visited are stored as a linked list</p>
+                        <p>🖨 <strong>Printer Queue</strong> - Print jobs are managed using linked lists</p>
+                        <p>🗂 <strong>File System</strong> - Files are often stored as linked lists on disks</p>
+                    </div>
+                    
+                    <div class="visualization">
+                        <div class="node">30</div>
+                        <div class="arrow">→</div>
+                        <div class="node">20</div>
+                        <div class="arrow">→</div>
+                        <div class="node">10</div>
+                        <div class="arrow">→</div>
+                        <div class="node-ptr">NULL</div>
+                    </div>
+                    
+                    <div class="controls">
+                        <button class="linked-list-btn" onclick="addLinkedListNode()"><i class="fas fa-plus"></i> Add Node</button>
+                        <button class="linked-list-btn" onclick="removeLinkedListNode()"><i class="fas fa-minus"></i> Remove Node</button>
+                        <button class="linked-list-btn" onclick="reverseLinkedList()"><i class="fas fa-exchange-alt"></i> Reverse</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stack Card -->
+            <div class="card stack">
+                <div class="card-header">
+                    <i class="fas fa-layer-group"></i>
+                    <h2>Stack (LIFO)</h2>
+                </div>
+                <div class="card-content">
+                    <div class="definition">
+                        <h3>Definition</h3>
+                        <p>A <span class="highlight">Stack</span> is a linear data structure that follows <span class="highlight">LIFO (Last In, First Out)</span> principle.</p>
+                        <p>Insertion = Push | Deletion = Pop</p>
+                    </div>
+                    
+                    <div class="algorithm">
+                        <h3>Algorithms</h3>
+                        <p><strong>Push Operation:</strong></p>
+                        <ol>
+                            <li>Check if stack is full (overflow condition)</li>
+                            <li>Increment the top pointer</li>
+                            <li>Insert the element at stack[top]</li>
+                        </ol>
+                        <p><strong>Pop Operation:</strong></p>
+                        <ol>
+                            <li>Check if stack is empty (underflow condition)</li>
+                            <li>Return the value at stack[top]</li>
+                            <li>Decrement the top pointer</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="complexity">
+                        <h3>Time Complexity</h3>
+                        <div class="operation-item">
+                            <i class="fas fa-search"></i>
+                            <span>Access: <strong>O(n)</strong></span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-search-plus"></i>
+                            <span>Search: <strong>O(n)</strong></span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Insertion (Push): <strong>O(1)</strong></span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-minus-circle"></i>
+                            <span>Deletion (Pop): <strong>O(1)</strong></span>
+                        </div>
+                    </div>
+                    
+                    <div class="operations">
+                        <h3>Common Operations</h3>
+                        <div class="operation-item">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>Push (add element to top)</span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>Pop (remove element from top)</span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-eye"></i>
+                            <span>Peek (view top element)</span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-ruler"></i>
+                            <span>Check if stack is empty or full</span>
+                        </div>
+                    </div>
+                    
+                    <div class="code">
+                        <h3>Code (C Example)</h3>
+                        <pre>#include &lt;stdio.h&gt;
+#define MAX 5
+
+int stack[MAX], top = -1;
+
+void push(int value) {
+    if (top == MAX-1)
+        printf("Stack Overflow\n");
+    else
+        stack[++top] = value;
+}
+
+void pop() {
+    if (top == -1)
+        printf("Stack Underflow\n");
+    else
+        printf("Popped: %d\n", stack[top--]);
+}
+
+int main() {
+    push(10);
+    push(20);
+    push(30);
+    pop();
+    return 0;
+}</pre>
+                    </div>
+                    
+                    <div class="output">
+                        <h3>Output</h3>
+                        <pre>Popped: 30</pre>
+                    </div>
+                    
+                    <div class="example">
+                        <h3>Real Life Examples</h3>
+                        <p>✍ <strong>Undo/Redo in Text Editors</strong> - Actions are stored in stacks</p>
+                        <p>🌐 <strong>Browser History</strong> - Back button uses stack functionality</p>
+                        <p>📞 <strong>Call Stack</strong> - Program execution uses call stacks</p>
+                        <p>🧩 <strong>Expression Evaluation</strong> - Stacks are used for parsing expressions</p>
+                    </div>
+                    
+                    <div class="visualization">
+                        <div class="stack-vis" id="stackVisual">
+                            <div class="stack-element">10</div>
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <button class="stack-btn" onclick="pushToStack()"><i class="fas fa-arrow-down"></i> Push</button>
+                        <button class="stack-btn" onclick="popFromStack()"><i class="fas fa-arrow-up"></i> Pop</button>
+                        <button class="stack-btn" onclick="clearStack()"><i class="fas fa-broom"></i> Clear</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Queue Card -->
+            <div class="card queue">
+                <div class="card-header">
+                    <i class="fas fa-stream"></i>
+                    <h2>Queue (FIFO)</h2>
+                </div>
+                <div class="card-content">
+                    <div class="definition">
+                        <h3>Definition</h3>
+                        <p>A <span class="highlight">Queue</span> is a linear data structure that follows <span class="highlight">FIFO (First In, First Out)</span> principle.</p>
+                        <p>Insertion = Enqueue (rear) | Deletion = Dequeue (front)</p>
+                    </div>
+                    
+                    <div class="algorithm">
+                        <h3>Algorithms</h3>
+                        <p><strong>Enqueue Operation:</strong></p>
+                        <ol>
+                            <li>Check if queue is full (overflow condition)</li>
+                            <li>Increment the rear pointer</li>
+                            <li>Insert the element at queue[rear]</li>
+                        </ol>
+                        <p><strong>Dequeue Operation:</strong></p>
+                        <ol>
+                            <li>Check if queue is empty (underflow condition)</li>
+                            <li>Return the value at queue[front]</li>
+                            <li>Increment the front pointer</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="complexity">
+                        <h3>Time Complexity</h3>
+                        <div class="operation-item">
+                            <i class="fas fa-search"></i>
+                            <span>Access: <strong>O(n)</strong></span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-search-plus"></i>
+                            <span>Search: <strong>O(n)</strong></span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Insertion (Enqueue): <strong>O(1)</strong></span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-minus-circle"></i>
+                            <span>Deletion (Dequeue): <strong>O(1)</strong></span>
+                        </div>
+                    </div>
+                    
+                    <div class="operations">
+                        <h3>Common Operations</h3>
+                        <div class="operation-item">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span>Enqueue (add element to rear)</span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Dequeue (remove element from front)</span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-eye"></i>
+                            <span>Front (get front element)</span>
+                        </div>
+                        <div class="operation-item">
+                            <i class="fas fa-ruler"></i>
+                            <span>Check if queue is empty or full</span>
+                        </div>
+                    </div>
+                    
+                    <div class="code">
+                        <h3>Code (C Example)</h3>
+                        <pre>#include &lt;stdio.h&gt;
+#define MAX 5
+
+int queue[MAX], front = -1, rear = -1;
+
+void enqueue(int value) {
+    if (rear == MAX-1)
+        printf("Queue Overflow\n");
+    else {
+        if (front == -1) front = 0;
+        queue[++rear] = value;
+    }
+}
+
+void dequeue() {
+    if (front == -1 || front > rear)
+        printf("Queue Underflow\n");
+    else
+        printf("Dequeued: %d\n", queue[front++]);
+}
+
+int main() {
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    dequeue();
+    return 0;
+}</pre>
+                    </div>
+                    
+                    <div class="output">
+                        <h3>Output</h3>
+                        <pre>Dequeued: 10</pre>
+                    </div>
+                    
+                    <div class="example">
+                        <h3>Real Life Examples</h3>
+                        <p>👥 <strong>People standing in line</strong> - First person in line is served first</p>
+                        <p>🌐 <strong>Network Packet Buffering</strong> - Packets processed in arrival order</p>
+                        <p>🖨 <strong>Printer Queue</strong> - Print jobs are handled in FIFO order</p>
+                        <p>🎮 <strong>Game Matchmaking</strong> - Players are matched in queue order</p>
+                    </div>
+                    
+                    <div class="visualization">
+                        <div class="queue-vis" id="queueVisual">
+                            <div class="queue-element">10</div>
+                            <div class="queue-element">20</div>
+                            <div class="queue-element">30</div>
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <button class="queue-btn" onclick="enqueueToQueue()"><i class="fas fa-sign-in-alt"></i> Enqueue</button>
+                        <button class="queue-btn" onclick="dequeueFromQueue()"><i class="fas fa-sign-out-alt"></i> Dequeue</button>
+                        <button class="queue-btn" onclick="clearQueue()"><i class="fas fa-broom"></i> Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Created with ❤ for Data Structures Education | Interactive Learning Resource</p>
+        </footer>
+    </div>
+
+    <script>
+        // Linked List functionality
+        let llValues = [30, 20, 10];
+        
+        function updateLinkedListVisual() {
+            const visual = document.querySelector('.linked-list .visualization');
+            visual.innerHTML = '';
+            
+            for (let i = 0; i < llValues.length; i++) {
+                const node = document.createElement('div');
+                node.className = 'node';
+                node.textContent = llValues[i];
+                visual.appendChild(node);
+                
+                if (i < llValues.length - 1) {
+                    const arrow = document.createElement('div');
+                    arrow.className = 'arrow';
+                    arrow.textContent = '→';
+                    visual.appendChild(arrow);
+                }
+            }
+            
+            const nullNode = document.createElement('div');
+            nullNode.className = 'node-ptr';
+            nullNode.textContent = 'NULL';
+            
+            const arrow = document.createElement('div');
+            arrow.className = 'arrow';
+            arrow.textContent = '→';
+            
+            visual.appendChild(arrow);
+            visual.appendChild(nullNode);
+        }
+        
+        function addLinkedListNode() {
+            const newValue = Math.floor(Math.random() * 100);
+            llValues.unshift(newValue);
+            updateLinkedListVisual();
+        }
+        
+        function removeLinkedListNode() {
+            if (llValues.length > 0) {
+                llValues.shift();
+                updateLinkedListVisual();
+            }
+        }
+        
+        function reverseLinkedList() {
+            llValues.reverse();
+            updateLinkedListVisual();
+        }
+        
+        // Stack functionality
+        let stackValues = [10];
+        
+        function updateStackVisual() {
+            const visual = document.getElementById('stackVisual');
+            visual.innerHTML = '';
+            
+            for (let i = 0; i < stackValues.length; i++) {
+                const element = document.createElement('div');
+                element.className = 'stack-element';
+                element.textContent = stackValues[i];
+                visual.appendChild(element);
+            }
+        }
+        
+        function pushToStack() {
+            if (stackValues.length < 5) {
+                const newValue = Math.floor(Math.random() * 100);
+                stackValues.push(newValue);
+                updateStackVisual();
+            } else {
+                alert('Stack Overflow! Cannot push to a full stack.');
+            }
+        }
+        
+        function popFromStack() {
+            if (stackValues.length > 0) {
+                const poppedValue = stackValues.pop();
+                alert(`Popped value: ${poppedValue}`);
+                updateStackVisual();
+            } else {
+                alert('Stack Underflow! Cannot pop from an empty stack.');
+            }
+        }
+        
+        function clearStack() {
+            stackValues = [];
+            updateStackVisual();
+        }
+        
+        // Queue functionality
+        let queueValues = [10, 20, 30];
+        
+        function updateQueueVisual() {
+            const visual = document.getElementById('queueVisual');
+            visual.innerHTML = '';
+            
+            for (let i = 0; i < queueValues.length; i++) {
+                const element = document.createElement('div');
+                element.className = 'queue-element';
+                element.textContent = queueValues[i];
+                visual.appendChild(element);
+            }
+        }
+        
+        function enqueueToQueue() {
+            if (queueValues.length < 5) {
+                const newValue = Math.floor(Math.random() * 100);
+                queueValues.push(newValue);
+                updateQueueVisual();
+            } else {
+                alert('Queue Overflow! Cannot enqueue to a full queue.');
+            }
+        }
+        
+        function dequeueFromQueue() {
+            if (queueValues.length > 0) {
+                const dequeuedValue = queueValues.shift();
+                alert(`Dequeued value: ${dequeuedValue}`);
+                updateQueueVisual();
+            } else {
+                alert('Queue Underflow! Cannot dequeue from an empty queue.');
+            }
+        }
+        
+        function clearQueue() {
+            queueValues = [];
+            updateQueueVisual();
+        }
+        
+        // Initialize visuals
+        updateLinkedListVisual();
+        updateStackVisual();
+        updateQueueVisual();
+    </script>
+</body>
+</html>
